@@ -45,9 +45,9 @@ namespace MortgageCalculator.Api.Repos
         {
             mortgageDet.LoanDurationM = (mortgageDet.LoanDurationY * 12);
             mortgageDet.InterestRateM = ((mortgageDet.InterestRateY / 100) / 12);
-            mortgageDet.MonthlyPayment = Math.Round(mortgageDet.LoanAmount * (mortgageDet.InterestRateM*(Math.Pow((1 + mortgageDet.InterestRateM),mortgageDet.LoanDurationM)) / (Math.Pow((1 + mortgageDet.InterestRateM) , mortgageDet.LoanDurationM) - 1)),2);
+            mortgageDet.MonthlyPayment = Math.Round(Convert.ToDouble(mortgageDet.LoanAmount * (mortgageDet.InterestRateM*(Math.Pow((1 + mortgageDet.InterestRateM),mortgageDet.LoanDurationM)) / (Math.Pow((1 + mortgageDet.InterestRateM) , mortgageDet.LoanDurationM) - 1))),2);
             mortgageDet.TotalRepayment = Math.Round(Convert.ToDecimal(mortgageDet.MonthlyPayment * mortgageDet.LoanDurationM),2);
-            mortgageDet.TotalInterestPaid = Math.Round(mortgageDet.TotalRepayment - mortgageDet.LoanAmount,2);
+            mortgageDet.TotalInterestPaid = Math.Round(Convert.ToDecimal(mortgageDet.TotalRepayment - mortgageDet.LoanAmount),2);
             return mortgageDet;
         }
 
