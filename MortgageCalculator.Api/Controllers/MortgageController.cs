@@ -26,8 +26,8 @@ namespace MortgageCalculator.Api.Controllers
             return mortgageService.GetAllMortgages().FirstOrDefault(x => x.MortgageId == id);
         }
 
-        [HttpPost]
-        public Dto.MortgageDetails MortgageCalc(Dto.MortgageDetails det)
+        // POST: api/Mortgage
+        public Dto.MortgageDetails Post(Dto.MortgageDetails det)
         {
             Dto.MortgageDetails updmodel = mortgageService.MortgageCalculate(det);
             return updmodel;
