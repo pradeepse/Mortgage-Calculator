@@ -16,8 +16,10 @@ namespace MortgageCalculator.UnitTests
     public class MortgageController
     {
         private List<Dto.Mortgage> model = null;
+        private Dto.Mortgage models = null;
         private Dto.MortgageDetails details = null;
         private Dto.MortgageDetails expdetails = null;
+        private Dto.MortgageDetails invaliddetails = null;
 
         [TestInitialize]
         public void Setup()
@@ -38,6 +40,16 @@ namespace MortgageCalculator.UnitTests
                 MortgageId = 1,
                 MortgageType = (Dto.MortgageType)Enum.Parse(typeof(Dto.MortgageType), "Variable")
             });
+            
+            this.models = new Dto.Mortgage();
+            models.Name = "Fixed Home Loan (Interest Only)";
+            models.EffectiveStartDate = DateTime.Parse(StartDate.ToString());
+            models.EffectiveEndDate = DateTime.Parse(DateTime.Today.ToString());
+            models.CancellationFee = Convert.ToDecimal(259.99);
+            models.EstablishmentFee = Convert.ToDecimal(259.99);
+            models.InterestRepayment = (Dto.InterestRepayment)Enum.Parse(typeof(Dto.InterestRepayment), "InterestOnly");
+            models.MortgageId = 1;
+            models.MortgageType = (Dto.MortgageType)Enum.Parse(typeof(Dto.MortgageType), "Variable");
 
             details = new Dto.MortgageDetails();
             details.LoanAmount = 100000;
@@ -51,6 +63,10 @@ namespace MortgageCalculator.UnitTests
             expdetails.MonthlyPayment = 843.90;
             expdetails.TotalRepayment = 151902;
             expdetails.TotalInterestPaid = 51902;
+            
+            invaliddetails = new Dto.MortgageDetails();
+            invaliddetails.LoanDurationY = 15;
+            invaliddetails.InterestRateY = 6;
         }
 
         [TestMethod]
@@ -69,6 +85,23 @@ namespace MortgageCalculator.UnitTests
             List<Dto.Mortgage> data = (List<Dto.Mortgage>)(result);
             Assert.AreSame(model, data);
         }
+        
+        [TestMethod]
+        public void GetMortgageDetailsById()
+        {
+            //Arrange
+            Mock<IMortgageService> mortgageService = new Mock<IMortgageService>();
+            mortgageService.Setup(ur => ur.GetAllMortgages()).Returns(this.model);
+
+            //Action
+            Api.Controllers.MortgageController controller = new Api.Controllers.MortgageController(mortgageService.Object);
+            Dto.Mortgage result = controller.Get(1);
+
+            //Assert
+            mortgageService.Verify(ur => ur.GetAllMortgages(), Times.Once);
+            Dto.Mortgage data = (Dto.Mortgage)(result);
+            Assert.IsNotNull(data);
+        }
 
         [TestMethod]
         public void MortgageCalculate()
@@ -79,11 +112,27 @@ namespace MortgageCalculator.UnitTests
 
             //Action
             Api.Controllers.MortgageController controller = new Api.Controllers.MortgageController(mortgageService.Object);
-            Dto.MortgageDetails updModel = controller.MortgageCalc(this.details);
+            Dto.MortgageDetails updModel = controller.Post(this.details);
 
             //Assert
             mortgageService.Verify(ur => ur.MortgageCalculate(this.details), Times.Once);
             Assert.AreSame(expdetails, updModel);
+        }
+        
+        [TestMethod]
+        public void MortgageCalculateInvalid()
+        {
+            //Arrange
+            Mock<IMortgageService> mortgageService = new Mock<IMortgageService>();
+            //mortgageService.Setup(ur => ur.MortgageCalculate(this.invaliddetails)).Returns(this.expdetails);
+
+            //Action
+            Api.Controllers.MortgageController controller = new Api.Controllers.MortgageController(mortgageService.Object);
+            Dto.MortgageDetails updModel = controller.Post(this.invaliddetails);
+
+            //Assert
+            mortgageService.Verify(ur => ur.MortgageCalculate(this.invaliddetails), Times.Once);
+            Assert.IsNull(updModel);
         }
 
     }
