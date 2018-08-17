@@ -71,4 +71,6 @@ Active Mortgages Selection:
 
 The Active Mortgage grid is used to perform selection of row and selected row will be retrieved individually.User have to select row by selecting on that row.Please find the screenshot given below.
 
+Note: The word document(Mortgage Calculator Application.docx) attached in solution contains detailed description of Mortgage application with screenshots in it.
+
 
