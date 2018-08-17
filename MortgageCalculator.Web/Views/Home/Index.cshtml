@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Mortgage Calculator</h1>
+    <p class="lead">
+        The Mortgage Calculator helps you:
+        <ul>
+            <li>Choose the right loan for you</li>
+            <li>The Interests and Repayment on your loan</li>
+        </ul>
+    </p>
+</div>
+
+
+@*<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal">
+            <fieldset>
+
+                <!-- Form Name -->
+                <legend>Calculator</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Borrowed Amount</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text" placeholder="0.00" class="form-control input-md" required="">
+                        <span class="help-block">Enter the amount to borrow</span>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>*@
+
+<div id="body">
+    <section class="content-wrapper main-content clear-fix">
+        <h3>Menu</h3>
+        <ol class="round">
+            <li class="one">
+                <h5>Mortgage Calculator</h5>
+                @Html.ActionLink("View details", "MortgageCalculate", "Mortgage")
+            </li>
+            <li class="two">
+                <h5>Active Mortgages</h5>
+                @Html.ActionLink("View details", "MortgageDetails", "Mortgage")
+            </li>
+        </ol>
+    </section>
+</div>

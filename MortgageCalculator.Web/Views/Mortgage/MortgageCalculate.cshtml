@@ -1,0 +1,90 @@
+﻿@model MortgageCalculator.Dto.MortgageDetails
+@{
+    ViewBag.Title = "MortgageCalculate";
+}
+
+<br />
+<h2>MortgageCalculate</h2>
+
+@Scripts.Render("~/bundles/MortgageCalculate")
+
+@using (Ajax.BeginForm("MortgageCalculate", "Mortgage", new AjaxOptions { HttpMethod = "POST", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "FormName" }))
+{
+
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th colspan="2" align="center">Mortgage Calculator Details</th>
+        </tr>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <tr>
+            <td>LoanAmount: </td>
+            <td>
+                @Html.TextBoxFor(model => model.LoanAmount)
+                @Html.ValidationMessageFor(model => model.LoanAmount, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td>Loan Duration(In Years): </td>
+            <td>
+                @Html.TextBoxFor(model => model.LoanDurationY)
+                @Html.ValidationMessageFor(model => model.LoanDurationY, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td>Interest Rate: </td>
+            <td>
+                @Html.TextBoxFor(model => model.InterestRateY)
+                @Html.ValidationMessageFor(model => model.InterestRateY, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Submit" />     <input type="button" value="Reset" onclick="ResetForm()" /></td>
+            <td></td>
+        </tr>
+    </table>
+
+}
+
+<table id="tblResult">
+    
+    <tr>
+        <td>Total Repayment:</td>
+        <td>
+            <label id="TotalRepayment"></label>
+        </td>
+    </tr>
+    <tr>
+        <td>Total Interest Paid:</td>
+        <td>
+            <label id="TotalInterestPaid"></label>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        $("#tblResult").hide();
+    })
+
+    function OnSuccess(data) {
+        $("#TotalRepayment").text("");
+        $("#TotalRepayment").append('₹' + data.TotalRepayment);
+        $("#TotalInterestPaid").text("");
+        $("#TotalInterestPaid").append('₹' + data.TotalInterestPaid);
+        $("#tblResult").show();
+     }
+    function OnFailure(data) {
+        alert('HTTP Status Code: ' + data.param1 + '  Error Message: ' + data.param2);
+    }
+
+    function ResetForm()
+    {
+        $('#FormName').each(function () {
+            this.reset();
+        });
+        $("#TotalRepayment").text("");
+        $("#TotalInterestPaid").text("");
+    }
+</script>  

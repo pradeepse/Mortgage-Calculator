@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "MortgageDetails";
+}
+<br />
+<h2>MortgageDetails</h2>
+<link href="~/Content/ui-grid.css" rel="stylesheet" />
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-route.js"></script>
+<script src="~/Scripts/angular-touch.min.js"></script>
+<script src="~/Scripts/angular-animate.min.js"></script>
+<script src="~/Scripts/ui-grid.min.js"></script>
+<script src="~/Angular/Controller/mortgagecontroller.js"></script>
+
+<div>
+    <labl><b> Active Mortgage Details are displayed </b></labl>
+</div>
+<div ng-app="mortgageapp" ng-controller="mortgagecontroller">
+    <div ui-grid="gridOptions" ui-grid-selection class="grid" ui-grid-auto-resize ng-cloak>
+    </div>
+    <br />
+    <br />
+    <table id="tblSelectedRow" ng-show="showTable">
+        <tr><td>Selected Row:</td></tr>
+        <tr>
+            <td>Mortgage ID</td>
+            <td>{{MortgageId}}</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{Name}}</td>
+        </tr>
+        <tr>
+            <td>Mortgage Type</td>
+            <td>{{MortgageType}}</td>
+        </tr>
+        <tr>
+            <td>Interest Repayment</td>
+            <td>{{InterestRepayment}}</td>
+        </tr>
+        <tr>
+            <td>Cancellation Fee</td>
+            <td>{{CancellationFee}}</td>
+        </tr>
+        <tr>
+            <td>Establishment Fee</td>
+            <td>{{EstablishmentFee}}</td>
+        </tr>
+    </table>
+ </div>
+
+
+
+
+
