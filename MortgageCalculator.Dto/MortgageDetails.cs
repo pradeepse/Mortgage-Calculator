@@ -10,7 +10,7 @@ namespace MortgageCalculator.Dto
     public class MortgageDetails
     {
         [Required]
-        public Int64 LoanAmount { get; set; }
+        public Int64? LoanAmount { get; set; }
 
         [Required]
         public double LoanDurationY { get; set; }
