@@ -79,17 +79,6 @@ namespace MortgageCalculator.UnitTests
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void GetMortgageDetails()
-        {
-            //Arrange
-            var testingHandler = new TestingDelegatingHandler<List<Dto.Mortgage>>(this.model);
-            var server = new HttpServer(new HttpConfiguration(), testingHandler);
-            var client = new Web.Controllers.MortgageController(new HttpClient(server));
-            //Act
-            var result = client.GetMortgageDetails();
-            //Assert
-            
-        }
+        
     }
 }
